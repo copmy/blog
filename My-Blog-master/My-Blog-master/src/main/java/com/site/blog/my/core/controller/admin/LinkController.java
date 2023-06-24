@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.Map;
 
 
@@ -56,6 +58,7 @@ public class LinkController {
         link.setLinkName(linkName);
         link.setLinkUrl(linkUrl);
         link.setLinkDescription(linkDescription);
+        link.setCreateTime(new Date());
         return ResultGenerator.genSuccessResult(linkService.saveLink(link));
     }
 

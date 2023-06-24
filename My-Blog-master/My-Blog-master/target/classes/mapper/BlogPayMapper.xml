@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.site.blog.my.core.dao.BlogPayMapper">
+    <resultMap id="BaseResultMap" type="com.site.blog.my.core.entity.BlogPay">
+        <id column="out_trade_no" jdbcType="INTEGER" property="out_trade_no"/>
+        <result column="pay_type" jdbcType="TINYINT" property="payType"/>
+        <result column="pay_name" jdbcType="VARCHAR" property="payName"/>
+        <result column="subject" jdbcType="VARCHAR" property="subject"/>
+        <result column="trade_no" jdbcType="INTEGER" property="trade_no"/>
+        <result column="total_amount" jdbcType="DOUBLE" property="total_amount"/>
+        <result column="admin_user_id" jdbcType="INTEGER" property="adminUserId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        out_trade_no, pay_type, pay_name, subject, trade_no, total_amount, admin_user_id, create_time,
+    is_deleted
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_pay
+        where out_trade_no = #{out_trade_no,jdbcType=INTEGER} AND is_deleted = 0
+    </select>
+
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    UPDATE tb_pay SET is_deleted = 1
+    where out_trade_no = #{out_trade_no,jdbcType=INTEGER} AND is_deleted = 0
+    </update>
+
+    <update id="deleteBatch">
+        update tb_pay
+        set is_deleted=1 where out_trade_no in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="findPayList" parameterType="Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_pay
+        where is_deleted=0
+        order by out_trade_no desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="getTotalPays" parameterType="Map" resultType="int">
+        select count(*)  from tb_pay
+        where is_deleted=0
+    </select>
+
+    <insert id="insert" parameterType="com.site.blog.my.core.entity.BlogPay">
+    insert into tb_pay (out_trade_no, pay_type, pay_name,
+     subject, trade_no, total_amount, admin_user_id,create_time,is_deleted
+     )
+    values (#{out_trade_no,jdbcType=INTEGER}, #{payType,jdbcType=TINYINT}, #{payName,jdbcType=VARCHAR},
+      #{subject,jdbcType=VARCHAR}, #{trade_no,jdbcType=VARCHAR}, #{total_amount,jdbcType=INTEGER},
+      #{adminUserId,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP},#{isDeleted,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.site.blog.my.core.entity.BlogPay">
+        insert into tb_pay
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="out_trade_no != null">
+                out_trade_no,
+            </if>
+            <if test="payType != null">
+                pay_type,
+            </if>
+            <if test="payName != null">
+                pay_name,
+            </if>
+            <if test="subject != null">
+                subject,
+            </if>
+            <if test="trade_no != null">
+                trade_no,
+            </if>
+            <if test="total_amount != null">
+                total_amount,
+            </if>
+            <if test="adminUserId != null">
+                admin_user_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="out_trade_no != null">
+                #{out_trade_no,jdbcType=INTEGER},
+            </if>
+            <if test="payType != null">
+                #{payType,jdbcType=TINYINT},
+            </if>
+            <if test="payName != null">
+                #{payName,jdbcType=VARCHAR},
+            </if>
+            <if test="subject != null">
+                #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="trade_no != null">
+                #{trade_no,jdbcType=INTEGER},
+            </if>
+            <if test="total_amount != null">
+                #{total_amount,jdbcType=DOUBLE},
+            </if>
+            <if test="adminUserId != null">
+                #{adminUserId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.site.blog.my.core.entity.BlogPay">
+        update tb_pay
+        <set>
+            <if test="payType != null">
+                pay_type = #{payType,jdbcType=TINYINT},
+            </if>
+            <if test="payName != null">
+                pay_name = #{payName,jdbcType=VARCHAR},
+            </if>
+            <if test="subject != null">
+                subject = #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="trade_no != null">
+                trade_no = #{trade_no,jdbcType=INTEGER},
+            </if>
+            <if test="total_amount != null">
+                total_amount = #{total_amount,jdbcType=DOUBLE},
+            </if>
+            <if test="adminUserId != null">
+                admin_user_id = #{adminUserId,jdbcType=INTEGER},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where out_trade_no = #{out_trade_no,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.site.blog.my.core.entity.BlogPay">
+    update tb_pay
+    set pay_type = #{payType,jdbcType=TINYINT},
+        pay_name = #{payName,jdbcType=VARCHAR},
+        subject = #{subject,jdbcType=VARCHAR},
+        trade_no = #{trade_no,jdbcType=INTEGER},
+        total_amount = #{total_amount,jdbcType=DOUBLE},
+        admin_user_id = #{adminUserId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+        is_deleted = #{isDeleted,jdbcType=TINYINT}
+    where out_trade_no = #{out_trade_no,jdbcType=INTEGER}
+  </update>
+</mapper>
