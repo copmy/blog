@@ -106,15 +106,24 @@ public class BlogController {
         if (StringUtils.isEmpty(blogCoverImage)) {
             return ResultGenerator.genFailResult("封面图不能为空");
         }
+
+
+        String[] sp = blogCoverImage.split("/");
+        String imageUrl = "";
+        for (int i = 3; i < sp.length; i++) {
+            imageUrl+="/"+sp[i];
+        }
+
         Blog blog = new Blog();
         blog.setBlogTitle(blogTitle);
         blog.setBlogSubUrl(blogSubUrl);
         blog.setBlogCategoryId(blogCategoryId);
         blog.setBlogTags(blogTags);
         blog.setBlogContent(blogContent);
-        blog.setBlogCoverImage(blogCoverImage);
+        blog.setBlogCoverImage(imageUrl);
         blog.setBlogStatus(blogStatus);
         blog.setEnableComment(enableComment);
+        blog.setCreateTime(new Date());
         String saveBlogResult = blogService.saveBlog(blog);
         if ("success".equals(saveBlogResult)) {
             return ResultGenerator.genSuccessResult("添加成功");
@@ -168,6 +177,7 @@ public class BlogController {
         blog.setBlogCoverImage(blogCoverImage);
         blog.setBlogStatus(blogStatus);
         blog.setEnableComment(enableComment);
+        blog.setUpdateTime(new Date());
         String updateBlogResult = blogService.updateBlog(blog);
         if ("success".equals(updateBlogResult)) {
             return ResultGenerator.genSuccessResult("修改成功");
