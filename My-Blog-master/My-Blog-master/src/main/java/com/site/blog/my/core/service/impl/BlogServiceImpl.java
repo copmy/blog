@@ -67,6 +67,7 @@ public class BlogServiceImpl implements BlogService {
                     //不存在就新增
                     BlogTag tempTag = new BlogTag();
                     tempTag.setTagName(tags[i]);
+                    tempTag.setCreateTime(new Date());
                     tagListForInsert.add(tempTag);
                 } else {
                     allTagsList.add(tag);
@@ -84,6 +85,7 @@ public class BlogServiceImpl implements BlogService {
                 BlogTagRelation blogTagRelation = new BlogTagRelation();
                 blogTagRelation.setBlogId(blog.getBlogId());
                 blogTagRelation.setTagId(tag.getTagId());
+                blogTagRelation.setCreateTime(new Date());
                 blogTagRelations.add(blogTagRelation);
             }
             if (blogTagRelationMapper.batchInsert(blogTagRelations) > 0) {
