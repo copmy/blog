@@ -5,8 +5,8 @@ alipay:
   notifyUrl: http://45ja97.natappfree.cc/alipay/notify
 
 
-spring:
-  security:
-    user:
-      name: admin
-      password: password
+#spring:
+#  security:
+#    user:
+#      name: admin
+#      password: password

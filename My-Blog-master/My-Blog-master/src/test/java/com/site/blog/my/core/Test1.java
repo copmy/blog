@@ -1,6 +1,7 @@
 package com.site.blog.my.core;
 
 
+import com.site.blog.my.core.util.MD5Util;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -35,5 +36,11 @@ public class Test1 {
         }
         System.out.println(s);
 //        System.out.println(c.concat(sp[sp.length-1]));
+    }
+
+    @Test
+    public void test3(){
+        String passwordMd5 = MD5Util.MD5Encode("123456", "UTF-8");
+        System.out.println(passwordMd5);
     }
 }

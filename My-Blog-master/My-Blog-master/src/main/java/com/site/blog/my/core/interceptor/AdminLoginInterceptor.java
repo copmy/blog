@@ -14,14 +14,21 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         String uri = request.getRequestURI();
-        if (uri.startsWith("/admin") && null == request.getSession().getAttribute("loginUser")) {
-            request.getSession().setAttribute("errorMsg", "请重新登陆");
+
+        if (uri.startsWith("/") && null == request.getSession().getAttribute("loginUser")) {
+            request.getSession().setAttribute("errorMsg", "没有访问权限");
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return false;
         } else {
+            if (uri.startsWith("/admin") && "admin" != request.getSession().getAttribute("loginType")){
+                request.getSession().setAttribute("errorMsg", "没有访问权限");
+                response.sendRedirect(request.getContextPath() + "/index");
+                return false;
+            }
             request.getSession().removeAttribute("errorMsg");
             return true;
         }
+
     }
 
     @Override
