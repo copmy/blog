@@ -26,6 +26,11 @@
       "name": "alipay.notify-url",
       "type": "java.lang.String",
       "sourceType": "com.site.blog.my.core.config.AliPayConfig"
+    },
+    {
+      "name": "alipay.return-url",
+      "type": "java.lang.String",
+      "sourceType": "com.site.blog.my.core.config.AliPayConfig"
     }
   ],
   "hints": []

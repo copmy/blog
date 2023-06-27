@@ -15,7 +15,7 @@ public class MyBlogWebMvcConfigurer implements WebMvcConfigurer {
 
     public void addInterceptors(InterceptorRegistry registry) {
         // 添加一个拦截器，拦截以/admin为前缀的url路径        .addPathPatterns("/admin/**")
-        registry.addInterceptor(adminLoginInterceptor).addPathPatterns("/**").excludePathPatterns("/admin/login").excludePathPatterns("/admin/register").excludePathPatterns("/admin/dist/**").excludePathPatterns("/admin/plugins/**").excludePathPatterns("/common/**");
+        registry.addInterceptor(adminLoginInterceptor).addPathPatterns("/**").excludePathPatterns("/admin/login").excludePathPatterns("/admin/register").excludePathPatterns("/admin/dist/**").excludePathPatterns("/admin/plugins/**").excludePathPatterns("/common/**").excludePathPatterns("/alipay/notify");
     }
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
