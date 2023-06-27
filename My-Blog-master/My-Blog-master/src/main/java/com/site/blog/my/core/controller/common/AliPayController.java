@@ -11,11 +11,10 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
-//import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.site.blog.my.core.config.AliPay;
 import com.site.blog.my.core.config.AliPayConfig;
-//import com.example.alipay.dao.OrdersMapper;
-//import com.example.alipay.entity.Orders;
+import com.site.blog.my.core.dao.BlogPayMapper;
+import com.site.blog.my.core.entity.BlogPay;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,8 +42,8 @@ public class AliPayController {
     @Resource
     private AliPayConfig aliPayConfig;
 
-//    @Resource
-//    private OrdersMapper ordersMapper;
+    @Resource
+    private BlogPayMapper blogPayMapper;
 
     @GetMapping("/pay") // /alipay/pay?subject=123&traceNo=123&totalAmount=13
     public void pay(AliPay aliPay, HttpServletResponse httpResponse) throws Exception {
@@ -89,9 +88,9 @@ public class AliPayController {
                 // System.out.println(name + " = " + request.getParameter(name));
             }
 
-            String outTradeNo = params.get("out_trade_no");
+            Integer outTradeNo = Integer.parseInt(params.get("out_trade_no"));
             String gmtPayment = params.get("gmt_payment");
-            String alipayTradeNo = params.get("trade_no");
+            Integer alipayTradeNo = Integer.parseInt(params.get("trade_no"));
 
             String sign = params.get("sign");
             String content = AlipaySignature.getSignCheckContentV1(params);
@@ -109,9 +108,11 @@ public class AliPayController {
                 System.out.println("买家付款金额: " + params.get("buyer_pay_amount"));
 
                 // 查询订单
-//                QueryWrapper<Orders> queryWrapper = new QueryWrapper<>();
-//                queryWrapper.eq("order_id", outTradeNo);
-//                Orders orders = ordersMapper.selectOne(queryWrapper);
+//                BlogPay blogPay = blogPayMapper.selectByPrimaryKey(outTradeNo);
+//                if(blogPay !=null){
+//
+//                }
+
 //
 //                if (orders != null) {
 //                    orders.setAlipayNo(alipayTradeNo);
